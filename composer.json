@@ -1,0 +1,19 @@
+{
+    "name": "neo/codemarker",
+    "description": "Quickly profile your code.",
+    "authors": [
+        {
+            "name": "Neo Ighodaro",
+            "email": "neo@hng.tech"
+        }
+    ],
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Neo\\CodeMarker\\": "src/Neo/CodeMarker"
+        },
+        "files": [
+            "src/helpers.php"
+        ]
+    }
+}
