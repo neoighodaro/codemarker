@@ -104,7 +104,7 @@ class CodeMarker {
      * @param  boolean $display_markers
      * @return array
      */
-    public function profileCode($only_slow_code = false, $display_markers = false)
+    public function profileCode($only_slow_code = false, $display_markers = false, $log_to_file = false)
     {
         if ($display_markers) {
             $this->showPoints($only_slow_code);
@@ -120,6 +120,10 @@ class CodeMarker {
 
                 $profile[$key] = $value['seconds'];
             }
+        }
+
+        if($log_to_file) {
+            $this->writeToLog($log_to_file);
         }
 
         return $profile;
@@ -162,5 +166,21 @@ class CodeMarker {
         $seconds  = (int)$duration-$hours*60*60-$minutes*60;
 
         return $seconds;
+    }
+
+    protected function writeToLog($log_file)
+    {
+        $current_time = date("Y-m-d h:i:sa");
+
+        // Open the file -- Verify if file exists else Create it 
+        $log = fopen($log_file, "a+");
+
+        fwrite($log, "-------------------------------{$current_time}-----------------------------------\n");
+
+        foreach ($this->markers as $key => $value) {
+            fwrite($log, "{$key} took {$value['seconds']} seconds to execute\n");
+        }
+
+        fclose($log);
     }
 }
